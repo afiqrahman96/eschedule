@@ -1,20 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:mp_final_project/screens/profile/components/background.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:mp_final_project/constant.dart';
+import 'package:mp_final_project/screens/profile/components/info.dart';
+import 'package:mp_final_project/screens/profile/components/profile_menu_item.dart';
+import 'package:mp_final_project/screens/profile/components/subject_registred.dart';
+import 'package:mp_final_project/size_config.dart';
 
 class Body extends StatelessWidget {
-  const Body({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Background(
+    double defaultSize = SizeConfig.defaultSize;
+    return SingleChildScrollView(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
-            height: size.height * 0.03,
+          Info(
+            image: "assets/images/bae-1.png",
+            name: 'Syafiqah Daniel',
+            title: 'Pensyarah Kanan',
+          ),
+          SizedBox(height: SizeConfig.defaultSize * 2),
+          SubjectRegistred(),
+          SizedBox(height: SizeConfig.defaultSize * 3),
+          ProfileMenuItem(
+            title:
+                'English For Professional\nPurpose ULAB3162 - 42 -Dr\nKamarul',
+          ),
+          ProfileMenuItem(
+            title:
+                'English For Professional\nPurpose ULAB3162 - 42 -Dr\nKamarul',
+          ),
+          ProfileMenuItem(
+            title:
+                'English For Professional\nPurpose ULAB3162 - 42 -Dr\nKamarul',
+          ),
+          ProfileMenuItem(
+            title:
+                'English For Professional\nPurpose ULAB3162 - 42 -Dr\nKamarul',
+          ),
+          ProfileMenuItem(
+            title:
+                'English For Professional\nPurpose ULAB3162 - 42 -Dr\nKamarul',
           ),
         ],
       ),
