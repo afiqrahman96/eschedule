@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:mp_final_project/constant.dart';
 import 'package:mp_final_project/screens/profile/components/info.dart';
 import 'package:mp_final_project/screens/profile/components/profile_menu_item.dart';
 import 'package:mp_final_project/screens/profile/components/subject_registred.dart';
@@ -15,8 +13,8 @@ class Body extends StatelessWidget {
         children: <Widget>[
           Info(
             image: "assets/images/bae-1.png",
-            name: 'Syafiqah Daniel',
-            title: 'Pensyarah Kanan',
+            name: "Syafiqah Daniel",
+            title: "Pensyarah Kanan",
           ),
           SizedBox(height: SizeConfig.defaultSize * 2),
           SubjectRegistred(),
