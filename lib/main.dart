@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mp_final_project/constant.dart';
+import 'package:mp_final_project/screens/class/class_screen.dart';
 import 'package:mp_final_project/screens/lecterur/profile_screen.dart';
 import 'package:mp_final_project/screens/profile/profile_screen.dart';
 import 'package:mp_final_project/screens/timetable/table_screen.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: TableScreen(),
+      home: ClassScreen(),
     );
   }
 }
