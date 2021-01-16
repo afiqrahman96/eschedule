@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
+import 'package:mp_final_project/screens/Lectprofile/profile_screen.dart';
+import 'package:mp_final_project/screens/timetable/component/table_list.dart';
+
+import '../screens/class/class_screen.dart';
+import '../screens/class/component/class_list.dart';
+import '../screens/lecterur/profile_screen.dart';
+import '../screens/splash_screen.dart';
+import '../screens/timetable/table_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -44,7 +52,11 @@ class MainDrawer extends StatelessWidget {
             'Profile',
             style: TextStyle(fontSize: 25),
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return ProfileScreen();
+            }));
+          },
         ),
         ListTile(
           leading: Icon(
@@ -55,7 +67,11 @@ class MainDrawer extends StatelessWidget {
             'Schedule',
             style: TextStyle(fontSize: 25),
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return TableScreen();
+            }));
+          },
         ),
         ListTile(
           leading: Icon(
@@ -66,7 +82,11 @@ class MainDrawer extends StatelessWidget {
             'Class venue',
             style: TextStyle(fontSize: 25),
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return ClassScreen();
+            }));
+          },
         ),
         ListTile(
           leading: Icon(
@@ -77,7 +97,11 @@ class MainDrawer extends StatelessWidget {
             'Logout',
             style: TextStyle(fontSize: 25),
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return SplashScreen();
+            }));
+          },
         ),
       ],
     ));

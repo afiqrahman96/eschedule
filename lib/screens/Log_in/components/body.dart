@@ -4,17 +4,15 @@ import 'package:mp_final_project/components/already_have_an_account.dart';
 import 'package:mp_final_project/components/rounded_button.dart';
 import 'package:mp_final_project/components/rounded_input_field.dart';
 import 'package:mp_final_project/components/rounded_password_field.dart';
-import 'package:mp_final_project/constant.dart';
+import 'package:mp_final_project/models/auth.dart';
+import 'package:mp_final_project/screens/Lectprofile/profile_screen.dart';
 import 'package:mp_final_project/screens/Log_in/components/background.dart';
 import 'package:mp_final_project/screens/Sign_up/sign_up_screen.dart';
 
-import '../../profile/profile_screen.dart';
-import '../login_screen.dart';
-
+// ignore: must_be_immutable
 class Body extends StatelessWidget {
-  const Body({
-    Key key,
-  }) : super(key: key);
+  String username;
+  String password;
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +37,25 @@ class Body extends StatelessWidget {
           SizedBox(height: size.height * 0.01),
           RoundedButton(
             text: "Login",
-            press: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return ProfileScreen();
-              }));
+            press: () async {
+              for (var un in user) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ProfileScreen();
+                }));
+                // if (username == un.username && password == un.password) {
+                //   if (un.roles == 0) {
+                //     Navigator.push(context,
+                //         MaterialPageRoute(builder: (context) {
+                //       return ProfileScreen();
+                //     }));
+                //   } else {
+                //     Navigator.push(context,
+                //         MaterialPageRoute(builder: (context) {
+                //       return ProfileScreen();
+                //     }));
+                //  }
+                // }
+              }
             },
           ),
           SizedBox(height: size.height * 0.03),
