@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mp_final_project/components/main_drawer.dart';
 import 'package:mp_final_project/constant.dart';
-import 'package:mp_final_project/screens/timetable/body.dart';
+import 'package:mp_final_project/screens/timetable/component/body.dart';
 import 'package:mp_final_project/size_config.dart';
 
 class TableScreen extends StatelessWidget {

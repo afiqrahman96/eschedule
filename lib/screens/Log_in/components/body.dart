@@ -8,6 +8,9 @@ import 'package:mp_final_project/constant.dart';
 import 'package:mp_final_project/screens/Log_in/components/background.dart';
 import 'package:mp_final_project/screens/Sign_up/sign_up_screen.dart';
 
+import '../../profile/profile_screen.dart';
+import '../login_screen.dart';
+
 class Body extends StatelessWidget {
   const Body({
     Key key,
@@ -36,7 +39,11 @@ class Body extends StatelessWidget {
           SizedBox(height: size.height * 0.01),
           RoundedButton(
             text: "Login",
-            press: () {},
+            press: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return ProfileScreen();
+              }));
+            },
           ),
           SizedBox(height: size.height * 0.03),
           AlreadyHaveAnAccount(
