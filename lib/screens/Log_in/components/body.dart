@@ -8,6 +8,7 @@ import 'package:mp_final_project/models/auth.dart';
 import 'package:mp_final_project/screens/Lectprofile/profile_screen.dart';
 import 'package:mp_final_project/screens/Log_in/components/background.dart';
 import 'package:mp_final_project/screens/Sign_up/sign_up_screen.dart';
+import 'package:mp_final_project/screens/lecterur/profile_screen.dart';
 
 // ignore: must_be_immutable
 class Body extends StatelessWidget {
@@ -50,7 +51,7 @@ class Body extends StatelessWidget {
                   if (un.roles == 0) {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return ProfileScreen();
+                      return LecterurScreen();
                     }));
                   } else {
                     Navigator.push(context,
