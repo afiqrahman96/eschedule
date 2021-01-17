@@ -29,32 +29,36 @@ class Body extends StatelessWidget {
             height: size.height * 0.35,
           ),
           RoundedInputField(
-            hintText: "Your Email",
-          ),
+              hintText: "Your Email",
+              onChanged: (value) {
+                username = value;
+              }),
           RoundedPasswordField(
-            onChanged: (value) {},
+            onChanged: (value) {
+              password = value;
+            },
           ),
           SizedBox(height: size.height * 0.01),
           RoundedButton(
             text: "Login",
             press: () async {
               for (var un in user) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ProfileScreen();
-                }));
-                // if (username == un.username && password == un.password) {
-                //   if (un.roles == 0) {
-                //     Navigator.push(context,
-                //         MaterialPageRoute(builder: (context) {
-                //       return ProfileScreen();
-                //     }));
-                //   } else {
-                //     Navigator.push(context,
-                //         MaterialPageRoute(builder: (context) {
-                //       return ProfileScreen();
-                //     }));
-                //  }
-                // }
+                // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                //   return ProfileScreen();
+                // }));
+                if (username == un.username && password == un.password) {
+                  if (un.roles == 0) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ProfileScreen();
+                    }));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ProfileScreen();
+                    }));
+                  }
+                }
               }
             },
           ),
