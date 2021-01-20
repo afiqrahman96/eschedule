@@ -15,11 +15,12 @@ class TableListCard extends StatelessWidget {
       aspectRatio: 3.1,
       child: Container(
         decoration: BoxDecoration(
+          color: const Color(0xFFE1BEE7),
           border: Border(
-            top: BorderSide(width: 1.0, color: Color(0xFFFFDFDFDF)),
-            left: BorderSide(width: 1.0, color: Color(0xFFFFDFDFDF)),
-            right: BorderSide(width: 1.0, color: Color(0xFFFF7F7F7F)),
-            bottom: BorderSide(width: 1.0, color: Color(0xFFFF7F7F7F)),
+            top: BorderSide(width: 4.5, color: Color(0xFF9C27B0)),
+            left: BorderSide(width: 4.5, color: Color(0xFF9C27B0)),
+            right: BorderSide(width: 4.5, color: Color(0xFF9C27B0)),
+            bottom: BorderSide(width: 4.5, color: Color(0xFF9C27B0)),
           ),
         ),
         child: Row(
@@ -50,7 +51,7 @@ class TableListCard extends StatelessWidget {
                                 color: Colors.white,
                                 background: Paint()
                                   ..strokeWidth = 15.0
-                                  ..color = Color(0xFFFAA916)
+                                  ..color = Color(0xFFE040FB)
                                   ..style = PaintingStyle.stroke
                                   ..strokeJoin = StrokeJoin.round),
                           ),
@@ -63,7 +64,7 @@ class TableListCard extends StatelessWidget {
                                 color: Colors.white,
                                 background: Paint()
                                   ..strokeWidth = 15.0
-                                  ..color = Color(0xFF96031A)
+                                  ..color = Color(0xFFE040FB)
                                   ..style = PaintingStyle.stroke
                                   ..strokeJoin = StrokeJoin.round),
                           ),
