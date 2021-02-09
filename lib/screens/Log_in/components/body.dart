@@ -4,11 +4,11 @@ import 'package:mp_final_project/components/already_have_an_account.dart';
 import 'package:mp_final_project/components/rounded_button.dart';
 import 'package:mp_final_project/components/rounded_input_field.dart';
 import 'package:mp_final_project/components/rounded_password_field.dart';
-import 'package:mp_final_project/models/auth.dart';
-import 'package:mp_final_project/screens/Lectprofile/profile_screen.dart';
+
 import 'package:mp_final_project/screens/Log_in/components/background.dart';
 import 'package:mp_final_project/screens/Sign_up/sign_up_screen.dart';
-import 'package:mp_final_project/screens/lecterur/profile_screen.dart';
+
+import 'package:mp_final_project/sevices/auth.dart';
 
 // ignore: must_be_immutable
 class Body extends StatelessWidget {
@@ -18,6 +18,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final AuthServices _auth = AuthServices();
     return Background(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -43,23 +44,11 @@ class Body extends StatelessWidget {
           RoundedButton(
             text: "Login",
             press: () async {
-              for (var un in user) {
-                // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                //   return ProfileScreen();
-                // }));
-                if (username == un.username && password == un.password) {
-                  if (un.roles == 0) {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return LecterurScreen();
-                    }));
-                  } else {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return ProfileScreen();
-                    }));
-                  }
-                }
+              dynamic result =
+                  await _auth.signInWithUsernameAndPassword(username, password);
+              print(result.uid);
+              if (result == null) {
+                print("error sign in");
               }
             },
           ),

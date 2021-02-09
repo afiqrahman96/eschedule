@@ -1,0 +1,51 @@
+# Write your API url. e.g. https://us-central1-jumail-backend-firebase-rest.cloudfunctions.net/api
+@baseUrl = https://us-central1-eschedule-fdd2a.cloudfunctions.net/api
+
+### Example of endpoints for basic CRUD operations.
+#    Later in your submission, leave only the one that you actually use and remove others from this file.
+
+
+### Get the list of quotes
+GET {{baseUrl}}/quotes
+
+###  Getting a quote for a given id
+GET {{baseUrl}}/quotes/8tdeqEi5d6dqGDQ3v6zA
+
+###  Add a new quote
+POST {{baseUrl}}/quotes
+Content-Type: application/json
+
+{
+    "data": "Be stronger than your excuses",
+    "like" : 1,
+    "dislike" : 1
+}
+
+### Update a quote partly
+PATCH {{baseUrl}}/quotes/M276hgOhMbalaW1gAJHO
+Content-Type: application/json
+
+{
+        "like" : 2
+}
+
+### Update a quote partly
+PATCH {{baseUrl}}/quotes/M276hgOhMbalaW1gAJHO
+Content-Type: application/json
+
+{
+        "dislike" : 20
+}
+
+### Replace an existing quote entirely
+PUT {{baseUrl}}/quotes/CZ39KJIRkFduwsIRniAE
+Content-Type: application/json
+
+{
+    "data": "Successful and unsuccessful people do not vary greatly in their abilities. They vary in their desires to reach their potentia",
+    "like" : 5,
+    "dislike" : 5
+}
+
+### Delete a quote
+DELETE {{baseUrl}}/quotes/VwS8jFp1ZO3jOYREtoA8

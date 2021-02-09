@@ -6,10 +6,16 @@ import 'package:mp_final_project/components/rounded_input_field.dart';
 import 'package:mp_final_project/components/rounded_password_field.dart';
 import 'package:mp_final_project/screens/Log_in/login_screen.dart';
 import 'package:mp_final_project/screens/Sign_up/background.dart';
+import 'package:mp_final_project/sevices/auth.dart';
 
 class Body extends StatelessWidget {
+  String matricNumber;
+  String password;
+  String email;
+  String name;
   @override
   Widget build(BuildContext context) {
+    final AuthServices _auth = AuthServices();
     Size size = MediaQuery.of(context).size;
     return Background(
       child: Column(
@@ -24,20 +30,39 @@ class Body extends StatelessWidget {
           ),
           SizedBox(height: size.height * 0.05),
           RoundedInputField(
-            hintText: "Firstname",
-            onChanged: (value) {},
+            hintText: "Matric Number",
+            onChanged: (value) {
+              matricNumber = value;
+            },
           ),
           RoundedInputField(
-            hintText: "Lastname",
-            onChanged: (value) {},
+            hintText: "Name",
+            onChanged: (value) {
+              name = value;
+            },
+          ),
+          RoundedInputField(
+            hintText: "email",
+            onChanged: (value) {
+              email = value;
+            },
           ),
           RoundedPasswordField(
-            onChanged: (value) {},
+            onChanged: (value) {
+              password = value;
+            },
           ),
           SizedBox(height: size.height * 0.01),
           RoundedButton(
             text: "SIGN UP",
-            press: () {},
+            press: () async {
+              dynamic result = await _auth.registerWithEmailAndPassword(
+                  email, matricNumber, password, name);
+              print(result.uid);
+              if (result == null) {
+                print("error sign in");
+              }
+            },
           ),
           SizedBox(height: size.height * 0.03),
           AlreadyHaveAnAccount(

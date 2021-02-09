@@ -1,18 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
-import 'package:mp_final_project/screens/Lectprofile/profile_screen.dart';
-import 'package:mp_final_project/screens/timetable/component/table_list.dart';
-
+import 'package:mp_final_project/models/Users.dart';
+import 'package:mp_final_project/screens/lecterur/profile_screen.dart';
+import 'package:mp_final_project/sevices/auth.dart';
+import 'package:mp_final_project/sevices/databse.dart';
+import 'package:provider/provider.dart';
 import '../screens/class/class_screen.dart';
-import '../screens/class/component/class_list.dart';
-import '../screens/lecterur/profile_screen.dart';
+import '../screens/Studprofile/profile_screen.dart';
 import '../screens/splash_screen.dart';
 import '../screens/timetable/table_screen.dart';
 
 class MainDrawer extends StatelessWidget {
+  final AuthServices _auth = AuthServices();
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<Users>(context);
     return Drawer(
         child: Column(
       children: <Widget>[
@@ -52,10 +54,19 @@ class MainDrawer extends StatelessWidget {
             'Profile',
             style: TextStyle(fontSize: 25),
           ),
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return ProfileScreen();
-            }));
+          onTap: () async {
+            DocumentSnapshot data =
+                await DatabaseServices(uid: user.uid).getUserData();
+            UserData users = UserData.fromDatabase(data.data);
+            if (users.category == "student") {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return ProfileScreen();
+              }));
+            } else {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return LecterurScreen();
+              }));
+            }
           },
         ),
         ListTile(
@@ -97,7 +108,8 @@ class MainDrawer extends StatelessWidget {
             'Logout',
             style: TextStyle(fontSize: 25),
           ),
-          onTap: () {
+          onTap: () async {
+            _auth.signOut();
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return SplashScreen();
             }));
