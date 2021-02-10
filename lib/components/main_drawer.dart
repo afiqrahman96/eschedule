@@ -1,20 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mp_final_project/models/Users.dart';
+import 'package:mp_final_project/locater.dart';
 import 'package:mp_final_project/screens/lecterur/profile_screen.dart';
 import 'package:mp_final_project/sevices/auth.dart';
-import 'package:mp_final_project/sevices/databse.dart';
-import 'package:provider/provider.dart';
 import '../screens/class/class_screen.dart';
 import '../screens/Studprofile/profile_screen.dart';
 import '../screens/splash_screen.dart';
 import '../screens/timetable/table_screen.dart';
 
 class MainDrawer extends StatelessWidget {
-  final AuthServices _auth = AuthServices();
+  final AuthServices _auth = locator<AuthServices>();
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<Users>(context);
+    final user = _auth.currentUser;
     return Drawer(
         child: Column(
       children: <Widget>[
@@ -55,10 +52,7 @@ class MainDrawer extends StatelessWidget {
             style: TextStyle(fontSize: 25),
           ),
           onTap: () async {
-            DocumentSnapshot data =
-                await DatabaseServices(uid: user.uid).getUserData();
-            UserData users = UserData.fromDatabase(data.data);
-            if (users.category == "student") {
+            if (user.category == "student") {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return ProfileScreen();
               }));

@@ -1,58 +1,49 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:mp_final_project/models/Users.dart';
 import 'package:mp_final_project/sevices/databse.dart';
 
 class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Users _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? Users(uid: user.uid) : null;
-  }
+  User _currentUser;
+  User get currentUser => _currentUser;
 
-  Stream<Users> get user {
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
-  }
+  // Stream<User> get user {
+  //   // return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+  // }
 
   Future signInwithEmailAndPassword(String email, String password) async {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
-      return user;
+      await _populateCurrentUser(user);
+      return user != null;
     } catch (e) {
       print(e.toString());
     }
   }
 
   Future registerWithEmailAndPassword(
-      String email, String matricNumber, String name, String password) async {
+      {String email, String matricNumber, String name, String password}) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
       // create a new document for the user with the uid
-      await DatabaseServices(uid: user.uid).updateUserData(
-          matricNumber, name, "student", email, "Pelajar@email.com");
-      return _userFromFirebaseUser(user);
+      await UserDatabaseService().updateUser(
+        user.uid,
+        name: name,
+        matricNumber: matricNumber,
+        category: "student",
+        email: email,
+        description: "Pelajar@email.com",
+      );
+      return user != null;
     } catch (error) {
       print(error.toString());
       return null;
     }
-  }
-
-  Future<FirebaseUser> signInWithUsernameAndPassword(
-      String username, String password) async {
-    try {
-      String email = await DatabaseServices().getEmail(username);
-      AuthResult result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      FirebaseUser user = result.user;
-      return user;
-    } catch (e) {
-      print(e);
-    }
-    return _auth.currentUser();
   }
 
   Future signOut() async {
@@ -62,5 +53,12 @@ class AuthServices {
       print(error.toString());
       return null;
     }
+  }
+
+  Future<void> _populateCurrentUser(FirebaseUser user) async {
+    if (user != null) {
+      _currentUser = await UserDatabaseService().getUser(user.uid);
+    } else
+      _currentUser = null;
   }
 }

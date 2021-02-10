@@ -12,7 +12,7 @@ class LecterurScreen extends StatelessWidget {
     return Scaffold(
       drawer: MainDrawer(),
       appBar: _getCustomAppBar(),
-      body: Body(),
+      body: Bodyprofile(),
     );
   }
 }

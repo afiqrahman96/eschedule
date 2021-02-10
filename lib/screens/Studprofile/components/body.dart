@@ -1,52 +1,31 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mp_final_project/screens/Studprofile/components/info.dart';
 
-import 'package:mp_final_project/models/Users.dart';
+import 'package:mp_final_project/sevices/auth.dart';
 
-import 'package:mp_final_project/sevices/databse.dart';
+import '../../../locater.dart';
 
-import 'package:mp_final_project/size_config.dart';
-import 'package:provider/provider.dart';
+class Bodyprofile extends StatefulWidget {
+  @override
+  _BodyprofileState createState() => _BodyprofileState();
+}
 
-import '../../Studprofile/components/info.dart';
-import '../../Studprofile/components/profile_menu_item.dart';
-import '../../Studprofile/components/subject_registred.dart';
+class _BodyprofileState extends State<Bodyprofile> {
+  final _authService = locator<AuthServices>();
 
-class Bodyprofile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double defaultSize = SizeConfig.defaultSize;
-    final user = Provider.of<Users>(context);
-    String username;
+    final user = _authService.currentUser;
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          FutureBuilder<DocumentSnapshot>(
-              future: DatabaseServices(uid: user.uid).getUserData(),
-              builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if (snapshot.connectionState != ConnectionState.done) {
-                  //print('project snapshot data is: ${snap.data}');
-                  return Text("loading");
-                } else {
-                  if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
-                  } else {
-                    if (snapshot.hasData) {
-                      var data = snapshot.data;
-                      UserData user = UserData.fromDatabase(data.data);
-                      String description = user.description;
-                      username = user.name;
-                      return Info(
-                        image: "assets/images/profile_pic.png",
-                        name: username,
-                        title: description,
-                      );
-                    } else {
-                      return Text("No Data");
-                    }
-                  }
-                }
-              }),
+          user != null
+              ? Info(
+                  image: "assets/images/profile_pic.png",
+                  name: user.name,
+                  title: user.description,
+                )
+              : Center(child: Text('no user')),
           // SizedBox(height: defaultSize * 2),
           // SubjectRegistred(),
           // SizedBox(height: defaultSize * 3),

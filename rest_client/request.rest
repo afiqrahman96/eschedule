@@ -6,7 +6,7 @@
 
 
 ### Get the list of quotes
-GET {{baseUrl}}/quotes
+GET {{baseUrl}}/subject
 
 ###  Getting a quote for a given id
 GET {{baseUrl}}/quotes/8tdeqEi5d6dqGDQ3v6zA
