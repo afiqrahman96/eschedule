@@ -4,11 +4,14 @@ import 'package:mp_final_project/components/main_drawer.dart';
 import 'package:mp_final_project/constant.dart';
 import 'package:mp_final_project/models/subject_model.dart';
 import 'package:mp_final_project/screens/Studprofile/components/info.dart';
+//import 'package:mp_final_project/screens/subject_form.dart';
 
 import 'package:mp_final_project/sevices/auth.dart';
+import 'package:mp_final_project/sevices/rest_service.dart';
 import 'package:mp_final_project/sevices/subject_data_service.dart';
 
 import '../../../locater.dart';
+import '../profile_screen.dart';
 
 class Bodyprofile extends StatefulWidget {
   @override
@@ -19,12 +22,13 @@ class _BodyprofileState extends State<Bodyprofile> {
   final _authService = locator<AuthServices>();
   Future<List<Subject>> _futureData;
   List<Subject> _subjects;
-  final dataService = QuoteDataService();
+  final dataService = SubjectDataService();
+  final restService = RestService();
 
   @override
   void initState() {
     super.initState();
-    _futureData = dataService.getAllQuotes();
+    _futureData = dataService.getAllSubject();
   }
 
   @override
@@ -62,7 +66,7 @@ class _BodyprofileState extends State<Bodyprofile> {
                 color: Colors.blueGrey,
               ),
               itemBuilder: (context, index) {
-                final Subject _subject = _subjects[index];
+                Subject _subject = _subjects[index];
                 return ListTile(
                   leading: SvgPicture.asset(
                     'assets/icon/calendar.svg',
@@ -96,11 +100,6 @@ class _BodyprofileState extends State<Bodyprofile> {
                       ),
                     ],
                   ),
-                  trailing: SvgPicture.asset(
-                    'assets/icon/right-arrow.svg',
-                    height: 50, //defaultSize * 2,
-                  ),
-                  isThreeLine: true,
                 );
               },
             ),

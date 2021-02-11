@@ -1,37 +1,223 @@
 import 'package:flutter/material.dart';
-import 'package:mp_final_project/screens/lecterur/components/info.dart';
-import 'package:mp_final_project/screens/lecterur/components/profile_menu_item.dart';
-import 'package:mp_final_project/screens/lecterur/components/subject_registred.dart';
-import 'package:mp_final_project/sevices/auth.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:mp_final_project/components/main_drawer.dart';
+import 'package:mp_final_project/constant.dart';
+import 'package:mp_final_project/models/subject_model.dart';
+import 'package:mp_final_project/screens/Studprofile/components/info.dart';
+import 'package:mp_final_project/screens/lecterur/profile_screen.dart';
+import 'package:mp_final_project/screens/subject_form.dart';
 
-import 'package:mp_final_project/size_config.dart';
+import 'package:mp_final_project/sevices/auth.dart';
+import 'package:mp_final_project/sevices/rest_service.dart';
+import 'package:mp_final_project/sevices/subject_data_service.dart';
 
 import '../../../locater.dart';
+//import '../../Lectprofile/profile_screen.dart';
 
-class Bodyprofile extends StatefulWidget {
+class LecterurBodyprofile extends StatefulWidget {
   @override
-  _BodyprofileState createState() => _BodyprofileState();
+  _LecterurBodyprofileState createState() => _LecterurBodyprofileState();
 }
 
-class _BodyprofileState extends State<Bodyprofile> {
+class _LecterurBodyprofileState extends State<LecterurBodyprofile> {
   final _authService = locator<AuthServices>();
+  Future<List<Subject>> _futureData;
+  List<Subject> _subjects;
+  final dataService = SubjectDataService();
+  final restService = RestService();
+
+  @override
+  void initState() {
+    super.initState();
+    _futureData = dataService.getAllSubject();
+  }
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder<List<Subject>>(
+      future: _futureData,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          _subjects = snapshot.data;
+          return _studetnMainScreen();
+        }
+        return _buildFetchingDataScreen();
+      },
+    );
+  }
+
+  Scaffold _studetnMainScreen() {
     final user = _authService.currentUser;
-    return SingleChildScrollView(
-      child: Column(
+    return Scaffold(
+      //appBar: _getCustomAppBar(),
+      body: Column(
         children: <Widget>[
           user != null
               ? Info(
-                  image: "assets/images/people_1.png",
+                  image: "assets/images/profile_pic.png",
                   name: user.name,
                   title: user.description,
                 )
               : Center(child: Text('no user')),
-      
+          Padding(padding: EdgeInsets.symmetric(vertical: 20)),
+          Expanded(
+            child: ListView.separated(
+              itemCount: _subjects.length,
+              separatorBuilder: (context, index) => Divider(
+                color: Colors.blueGrey,
+              ),
+              itemBuilder: (context, index) {
+                Subject _subject = _subjects[index];
+                return ListTile(
+                  leading: SvgPicture.asset(
+                    'assets/icon/calendar.svg',
+                    height: 50, //defaultSize * 2,
+                  ),
+                  title: Text(
+                    _subject.data,
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+                    textAlign: TextAlign.left,
+                  ),
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text(
+                        _subject.date,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 12),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        _subject.venue,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 12),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        _subject.time,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 12),
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      IconButton(
+                        icon: new Icon(Icons.delete),
+                        onPressed: () async {
+                          print("deleting...");
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Warning'),
+                                  content:
+                                      Text("Are you sure to delete this todo?"),
+                                  actions: [
+                                    TextButton(
+                                      child: Text("Yes"),
+                                      onPressed: () {
+                                        print("Yes");
+                                        Navigator.pop(context);
+                                        restService
+                                            .deleteSubject(_subject.id)
+                                            .then(
+                                          (isSuccess) {
+                                            if (isSuccess) {
+                                              print("delete successfully");
+                                            } else {
+                                              print("delete failed");
+                                            }
+                                          },
+                                        );
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text("No"),
+                                      onPressed: () {
+                                        print("No");
+                                        Navigator.pop(context);
+                                      },
+                                    )
+                                  ],
+                                );
+                              });
+                        },
+                      ),
+                      IconButton(
+                        icon: new Icon(Icons.edit),
+                        onPressed: () {
+                          print("Editing...");
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return SubjectForm(
+                              subject: _subject,
+                            );
+                          }));
+                        },
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.refresh),
+        onPressed: () {
+          dataService.getAllSubject();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LecterurScreen()),
+          );
+        },
       ),
     );
   }
+
+  Scaffold _buildFetchingDataScreen() {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CircularProgressIndicator(),
+            SizedBox(height: 50),
+            Text('Fetching data... Please wait'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+_getCustomAppBar() {
+  return PreferredSize(
+    preferredSize: Size.fromHeight(80),
+    child: AppBar(
+      iconTheme: IconThemeData(
+        color: Colors.white,
+      ),
+      title: Text(
+        'Dashboard',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.normal,
+        ),
+      ),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      flexibleSpace: ClipPath(
+        // clipper: MyCustomClipperForAppBar(),
+        child: Container(
+          color: kPrimaryColor,
+        ),
+      ),
+    ),
+  );
 }

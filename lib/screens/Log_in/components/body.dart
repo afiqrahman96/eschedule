@@ -4,13 +4,13 @@ import 'package:mp_final_project/components/already_have_an_account.dart';
 import 'package:mp_final_project/components/rounded_button.dart';
 import 'package:mp_final_project/components/rounded_input_field.dart';
 import 'package:mp_final_project/components/rounded_password_field.dart';
-import 'package:mp_final_project/screens/Lectprofile/profile_screen.dart';
+//import 'package:mp_final_project/screens/Lectprofile/profile_screen.dart';
 
 import 'package:mp_final_project/screens/Log_in/components/background.dart';
 import 'package:mp_final_project/screens/Sign_up/sign_up_screen.dart';
 import 'package:mp_final_project/screens/Studprofile/profile_screen.dart';
 import 'package:mp_final_project/screens/lecterur/profile_screen.dart';
-import 'package:mp_final_project/screens/lectprofile/profile_screen.dart';
+//import 'package:mp_final_project/screens/lectprofile/profile_screen.dart';
 
 import 'package:mp_final_project/sevices/auth.dart';
 

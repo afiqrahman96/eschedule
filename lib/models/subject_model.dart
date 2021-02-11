@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Subject {
   String id;
   String data;
@@ -27,4 +29,14 @@ class Subject {
 
   Map<String, dynamic> toJson() =>
       {'id': id, 'data': data, 'date': date, 'time': time, 'venue': venue};
+}
+
+List<Subject> subjectFromJson(String jsonData) {
+  final data = json.decode(jsonData);
+  return List<Subject>.from(data.map((item) => Subject.fromJson(item)));
+}
+
+String subjectToJson(Subject subject) {
+  final jsonData = subject.toJson();
+  return json.encode(jsonData);
 }

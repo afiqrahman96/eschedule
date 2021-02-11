@@ -19,12 +19,12 @@ class _BodyprofileState extends State<Tablebody> {
   final _authService = locator<AuthServices>();
   Future<List<Subject>> _futureData;
   List<Subject> _subjects;
-  final dataService = QuoteDataService();
+  final dataService = SubjectDataService();
 
   @override
   void initState() {
     super.initState();
-    _futureData = dataService.getAllQuotes();
+    _futureData = dataService.getAllSubject();
   }
 
   @override
