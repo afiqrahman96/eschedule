@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mp_final_project/components/main_drawer.dart';
-import 'package:mp_final_project/constant.dart';
 import 'package:mp_final_project/models/subject_model.dart';
 import 'package:mp_final_project/screens/Studprofile/components/info.dart';
 import 'package:mp_final_project/screens/lecterur/profile_screen.dart';
@@ -13,7 +11,6 @@ import 'package:mp_final_project/sevices/rest_service.dart';
 import 'package:mp_final_project/sevices/subject_data_service.dart';
 
 import '../../../locater.dart';
-import '../../Studprofile/profile_screen.dart';
 import '../profile_screen.dart';
 //import '../../Lectprofile/profile_screen.dart';
 
@@ -116,8 +113,8 @@ class _LecterurBodyprofileState extends State<LecterurBodyprofile> {
                               builder: (context) {
                                 return AlertDialog(
                                   title: Text('Warning'),
-                                  content:
-                                      Text("Are you sure to delete this todo?"),
+                                  content: Text(
+                                      "Are you sure to delete this subject?"),
                                   actions: [
                                     TextButton(
                                       child: Text("Yes"),
@@ -130,6 +127,8 @@ class _LecterurBodyprofileState extends State<LecterurBodyprofile> {
                                           (isSuccess) {
                                             if (isSuccess) {
                                               print("delete successfully");
+
+                                              dataService.getAllSubject();
                                             } else {
                                               print("delete failed");
                                             }
@@ -216,33 +215,6 @@ class _LecterurBodyprofileState extends State<LecterurBodyprofile> {
       ),
     );
   }
-}
-
-_getCustomAppBar() {
-  return PreferredSize(
-    preferredSize: Size.fromHeight(80),
-    child: AppBar(
-      iconTheme: IconThemeData(
-        color: Colors.white,
-      ),
-      title: Text(
-        'Dashboard',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-          fontWeight: FontWeight.normal,
-        ),
-      ),
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      flexibleSpace: ClipPath(
-        // clipper: MyCustomClipperForAppBar(),
-        child: Container(
-          color: kPrimaryColor,
-        ),
-      ),
-    ),
-  );
 }
 
 /*floatingActionButton: FloatingActionButton(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mp_final_project/constant.dart';
 import 'package:mp_final_project/models/Users.dart';
 import 'package:mp_final_project/sevices/Participant_service.dart';
 
@@ -11,13 +10,13 @@ class Bodyprofile extends StatefulWidget {
 
 class _BodyprofileState extends State<Bodyprofile> {
   Future<List<User>> _futureData;
-  List<User> _subjects;
+  List<User> _participants;
   final dataService = ParticipantService();
 
   @override
   void initState() {
     super.initState();
-    _futureData = dataService.getAllQuotes();
+    _futureData = dataService.getAllParticipant();
   }
 
   @override
@@ -26,7 +25,7 @@ class _BodyprofileState extends State<Bodyprofile> {
       future: _futureData,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          _subjects = snapshot.data;
+          _participants = snapshot.data;
           return _studetnMainScreen();
         }
         return _buildFetchingDataScreen();
@@ -42,19 +41,19 @@ class _BodyprofileState extends State<Bodyprofile> {
           Padding(padding: EdgeInsets.symmetric(vertical: 20)),
           Expanded(
             child: ListView.separated(
-              itemCount: _subjects.length,
+              itemCount: _participants.length,
               separatorBuilder: (context, index) => Divider(
                 color: Colors.blueGrey,
               ),
               itemBuilder: (context, index) {
-                final User _subject = _subjects[index];
+                final User _participant = _participants[index];
                 return ListTile(
                   leading: SvgPicture.asset(
                     'assets/icon/calendar.svg',
                     height: 50, //defaultSize * 2,
                   ),
                   title: Text(
-                    _subject.name,
+                    _participant.name,
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
                     textAlign: TextAlign.left,
                   ),
@@ -62,25 +61,25 @@ class _BodyprofileState extends State<Bodyprofile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        _subject.matricNumber,
+                        _participant.matricNumber,
                         style: TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 12),
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        _subject.email,
+                        _participant.email,
                         style: TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 12),
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        _subject.category,
+                        _participant.category,
                         style: TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 12),
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        _subject.description,
+                        _participant.description,
                         style: TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 12),
                         textAlign: TextAlign.left,

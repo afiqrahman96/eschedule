@@ -5,6 +5,7 @@ import 'package:mp_final_project/models/subject_model.dart';
 // RestService is a wrapper class implmenting for REST API calls.
 //  The class is implemented using the Singleton design pattern.
 //  i.e. this class will only be instantiated once
+// ignore: todo
 //  TODO: Do nothing on this class except changing the baseUrl
 
 class RestService {
@@ -64,6 +65,16 @@ class RestService {
     Map<String, String> header = {"content-type": "application/json"};
 
     final response = await http.delete("$baseUrl/subject/$id", headers: header);
+
+    print(response.body);
+
+    return response.statusCode == 200;
+  }
+
+  Future<bool> deleteUser(String id) async {
+    Map<String, String> header = {"content-type": "application/json"};
+
+    final response = await http.delete("$baseUrl/user/$id", headers: header);
 
     print(response.body);
 

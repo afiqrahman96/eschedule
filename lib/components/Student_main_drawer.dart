@@ -3,11 +3,10 @@ import 'package:mp_final_project/locater.dart';
 import 'package:mp_final_project/screens/Participant/lect_stud_participant_screen.dart';
 import 'package:mp_final_project/screens/Participant/stud_participant_screen.dart';
 import 'package:mp_final_project/screens/lecterur/profile_screen.dart';
-import 'package:mp_final_project/screens/timetable/table_screen.dart';
+
 import 'package:mp_final_project/sevices/auth.dart';
 import '../screens/Studprofile/profile_screen.dart';
 import '../screens/splash_screen.dart';
-import '../screens/timetable/table_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   final AuthServices _auth = locator<AuthServices>();
@@ -77,11 +76,11 @@ class MainDrawer extends StatelessWidget {
           onTap: () {
             if (user.category == "student") {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return LectParticipantScreen();
+                return StudParticipantScreen();
               }));
             } else {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return StudParticipantScreen();
+                return LectParticipantScreen();
               }));
             }
           },

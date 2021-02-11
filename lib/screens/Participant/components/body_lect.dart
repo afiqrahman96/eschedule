@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:mp_final_project/screens/Participant/lect_stud_participant_screen.dart';
+import 'package:mp_final_project/sevices/rest_service.dart';
 import '../../../models/Users.dart';
 import '../../../sevices/Participant_service.dart';
 import '../../Sign_up/sign_up_screen.dart';
@@ -13,11 +15,12 @@ class _BodyprofileState extends State<Bodyprofile> {
   Future<List<User>> _futureData;
   List<User> _subjects;
   final dataService = ParticipantService();
+  final restService = RestService();
 
   @override
   void initState() {
     super.initState();
-    _futureData = dataService.getAllQuotes();
+    _futureData = dataService.getAllParticipant();
   }
 
   @override
@@ -84,6 +87,64 @@ class _BodyprofileState extends State<Bodyprofile> {
                       ),
                     ],
                   ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      IconButton(
+                        icon: new Icon(Icons.delete),
+                        onPressed: () async {
+                          print("deleting...");
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Warning'),
+                                  content: Text(
+                                      "Are you sure to remove this student?"),
+                                  actions: [
+                                    TextButton(
+                                      child: Text("Yes"),
+                                      onPressed: () {
+                                        print("Yes");
+                                        Navigator.pop(context);
+                                        restService
+                                            .deleteUser(_subject.id)
+                                            .then(
+                                          (isSuccess) {
+                                            if (isSuccess) {
+                                              setState(() =>
+                                                      _buildFetchingDataScreen()
+                                                  // Navigator.push(
+                                                  //       context,
+                                                  //       MaterialPageRoute(
+                                                  //           builder: (context) =>
+                                                  //               LectParticipantScreen()),
+                                                  //     )
+                                                  );
+                                              print("delete successfully");
+
+                                              dataService.getAllParticipant();
+                                            } else {
+                                              print("delete failed");
+                                            }
+                                          },
+                                        );
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text("No"),
+                                      onPressed: () {
+                                        print("No");
+                                        Navigator.pop(context);
+                                      },
+                                    )
+                                  ],
+                                );
+                              });
+                        },
+                      ),
+                    ],
+                  ),
                   isThreeLine: true,
                 );
               },
@@ -95,17 +156,26 @@ class _BodyprofileState extends State<Bodyprofile> {
       floatingActionButton: SpeedDial(
         animatedIcon: AnimatedIcons.menu_close,
         backgroundColor: Colors.purple,
+        foregroundColor: Colors.white,
         closeManually: true,
         children: [
           SpeedDialChild(
-              child: new Icon(Icons.delete),
-              label: "Delete particopant",
-              backgroundColor: Colors.red,
-              onTap: () {}),
+              child: new Icon(Icons.refresh),
+              label: "Refresh",
+              backgroundColor: Colors.purple,
+              foregroundColor: Colors.white,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LectParticipantScreen()),
+                );
+              }),
           SpeedDialChild(
               child: new Icon(Icons.add),
-              label: "Add particopant",
-              backgroundColor: Colors.green,
+              label: "Add participant",
+              backgroundColor: Colors.purple,
+              foregroundColor: Colors.white,
               onTap: () {
                 Navigator.push(
                   context,
@@ -114,18 +184,6 @@ class _BodyprofileState extends State<Bodyprofile> {
               })
         ],
       ),
-      //   floatingActionButton: FloatingActionButton(
-      //     child: Icon(Icons.group_add_rounded),
-
-      //     // TODO: Define the 'onPressed' callback for the 'add participant' button
-      //     onPressed: () {
-      //       dataService.getAllQuotes();
-      //       Navigator.push(
-      //         context,
-      //         MaterialPageRoute(builder: (context) => SignUpScreen()),
-      //       );
-      //     },
-      //   ),
     );
   }
 

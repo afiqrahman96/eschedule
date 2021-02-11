@@ -24,7 +24,7 @@ class ParticipantService {
   // Tho REST calls below, 1) to get all quotes and 2). to delete a quote
   //  are given for examples to guide you writing the other REST calls.
 
-  Future<List<User>> getAllQuotes() async {
+  Future<List<User>> getAllParticipant() async {
     final listJson = await rest.get('user/all');
 
     return (listJson as List)
@@ -33,12 +33,12 @@ class ParticipantService {
   }
 
   // You may not need this REST call in your app. It is only for example here.
-  Future deleteQuote({String id}) async {
+  Future deleteParticipant({String id}) async {
     await rest.delete('user/$id');
   }
 
   // You may not need this REST call in your app. It is only for example here.
-  Future<User> createQuote({User subject}) async {
+  Future<User> createParticipant({User subject}) async {
     final json = await rest.post('user', data: subject);
     return User.fromJson(json);
   }

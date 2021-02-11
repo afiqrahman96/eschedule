@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mp_final_project/components/main_drawer.dart';
 import 'package:mp_final_project/constant.dart';
 import 'package:mp_final_project/models/subject_model.dart';
 import 'package:mp_final_project/screens/Studprofile/components/info.dart';
@@ -11,7 +10,6 @@ import 'package:mp_final_project/sevices/rest_service.dart';
 import 'package:mp_final_project/sevices/subject_data_service.dart';
 
 import '../../../locater.dart';
-import '../profile_screen.dart';
 
 class Bodyprofile extends StatefulWidget {
   @override
