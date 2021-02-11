@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mp_final_project/components/main_drawer.dart';
 import 'package:mp_final_project/constant.dart';
-import 'package:mp_final_project/models/subject_model.dart';
-import 'package:mp_final_project/screens/Studprofile/components/info.dart';
-
-import 'package:mp_final_project/sevices/auth.dart';
-import 'package:mp_final_project/sevices/subject_data_service.dart';
-
-import '../../../locater.dart';
+import 'package:mp_final_project/models/Users.dart';
+import 'package:mp_final_project/sevices/Participant_service.dart';
 
 class Bodyprofile extends StatefulWidget {
   @override
@@ -16,10 +10,9 @@ class Bodyprofile extends StatefulWidget {
 }
 
 class _BodyprofileState extends State<Bodyprofile> {
-  final _authService = locator<AuthServices>();
-  Future<List<Subject>> _futureData;
-  List<Subject> _subjects;
-  final dataService = QuoteDataService();
+  Future<List<User>> _futureData;
+  List<User> _subjects;
+  final dataService = ParticipantService();
 
   @override
   void initState() {
@@ -29,7 +22,7 @@ class _BodyprofileState extends State<Bodyprofile> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Subject>>(
+    return FutureBuilder<List<User>>(
       future: _futureData,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -42,18 +35,10 @@ class _BodyprofileState extends State<Bodyprofile> {
   }
 
   Scaffold _studetnMainScreen() {
-    final user = _authService.currentUser;
     return Scaffold(
       //appBar: _getCustomAppBar(),
       body: Column(
         children: <Widget>[
-          user != null
-              ? Info(
-                  image: "assets/images/profile_pic.png",
-                  name: user.name,
-                  title: user.description,
-                )
-              : Center(child: Text('no user')),
           Padding(padding: EdgeInsets.symmetric(vertical: 20)),
           Expanded(
             child: ListView.separated(
@@ -62,34 +47,40 @@ class _BodyprofileState extends State<Bodyprofile> {
                 color: Colors.blueGrey,
               ),
               itemBuilder: (context, index) {
-                final Subject _subject = _subjects[index];
+                final User _subject = _subjects[index];
                 return ListTile(
                   leading: SvgPicture.asset(
                     'assets/icon/calendar.svg',
                     height: 50, //defaultSize * 2,
                   ),
                   title: Text(
-                    _subject.data,
+                    _subject.name,
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
                     textAlign: TextAlign.left,
                   ),
-                  subtitle: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        _subject.date,
+                        _subject.matricNumber,
                         style: TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 12),
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        _subject.venue,
+                        _subject.email,
                         style: TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 12),
                         textAlign: TextAlign.left,
                       ),
                       Text(
-                        _subject.time,
+                        _subject.category,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 12),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        _subject.description,
                         style: TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 12),
                         textAlign: TextAlign.left,
@@ -124,31 +115,4 @@ class _BodyprofileState extends State<Bodyprofile> {
       ),
     );
   }
-}
-
-_getCustomAppBar() {
-  return PreferredSize(
-    preferredSize: Size.fromHeight(80),
-    child: AppBar(
-      iconTheme: IconThemeData(
-        color: Colors.white,
-      ),
-      title: Text(
-        'Dashboard',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-          fontWeight: FontWeight.normal,
-        ),
-      ),
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      flexibleSpace: ClipPath(
-        // clipper: MyCustomClipperForAppBar(),
-        child: Container(
-          color: kPrimaryColor,
-        ),
-      ),
-    ),
-  );
 }

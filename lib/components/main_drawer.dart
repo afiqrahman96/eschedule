@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mp_final_project/locater.dart';
+import 'package:mp_final_project/screens/Participant/participant_screen.dart';
 import 'package:mp_final_project/screens/lecterur/profile_screen.dart';
 import 'package:mp_final_project/sevices/auth.dart';
 import '../screens/class/class_screen.dart';
@@ -44,11 +45,11 @@ class MainDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: Icon(
-            Icons.person,
+            Icons.home,
             size: 30,
           ),
           title: Text(
-            'Profile',
+            'Home',
             style: TextStyle(fontSize: 25),
           ),
           onTap: () async {
@@ -75,6 +76,21 @@ class MainDrawer extends StatelessWidget {
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return TableScreen();
+            }));
+          },
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.person,
+            size: 30,
+          ),
+          title: Text(
+            'Participant',
+            style: TextStyle(fontSize: 25),
+          ),
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return ParticipantScreen();
             }));
           },
         ),

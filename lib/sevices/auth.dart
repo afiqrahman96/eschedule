@@ -25,7 +25,11 @@ class AuthServices {
   }
 
   Future registerWithEmailAndPassword(
-      {String email, String matricNumber, String name, String password}) async {
+      {String email,
+      String matricNumber,
+      String name,
+      String password,
+      String description}) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -37,7 +41,7 @@ class AuthServices {
         matricNumber: matricNumber,
         category: "student",
         email: email,
-        description: "Pelajar@email.com",
+        description: description,
       );
       return user != null;
     } catch (error) {

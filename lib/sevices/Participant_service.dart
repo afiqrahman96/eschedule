@@ -1,9 +1,7 @@
-import 'package:mp_final_project/models/lect_subject_model.dart';
-
 import './rest_service.dart';
-import '../models/subject_model.dart';
+import '../models/Users.dart';
 
-// QuoteDataService is a wrapper class implmenting calls for CRUD operations on Quote endpoints.
+// ParticipantService is a wrapper class implmenting calls for CRUD operations on Quote endpoints.
 //  The class is implemented using the Singleton design pattern.
 
 // TODO: Modify this class accordingly. You want to add all CRUD operations that your app uses.
@@ -11,38 +9,37 @@ import '../models/subject_model.dart';
 //     You may want to refer the past project flutter_todo_rest, you can clone from github:
 //         $ git clone https://github.com/jumail-utm/flutter_todo_rest.git
 
-class LectQuoteDataService {
+class ParticipantService {
   //------- Here is how we implement 'Singleton pattern' in Dart --------
 
-  static final LectQuoteDataService _instance =
-      LectQuoteDataService._constructor();
-  factory LectQuoteDataService() {
+  static final ParticipantService _instance = ParticipantService._constructor();
+  factory ParticipantService() {
     return _instance;
   }
 
-  LectQuoteDataService._constructor();
+  ParticipantService._constructor();
   final rest = RestService();
   //---------------------------- end of singleton implementation
 
   // Tho REST calls below, 1) to get all quotes and 2). to delete a quote
   //  are given for examples to guide you writing the other REST calls.
 
-  Future<List<LectSubject>> getAllSubject() async {
-    final listJson = await rest.get('lectsubject');
+  Future<List<User>> getAllQuotes() async {
+    final listJson = await rest.get('user/all');
 
     return (listJson as List)
-        .map((itemJson) => LectSubject.fromJson(itemJson))
+        .map((itemJson) => User.fromJson(itemJson))
         .toList();
   }
 
   // You may not need this REST call in your app. It is only for example here.
   Future deleteQuote({String id}) async {
-    await rest.delete('lectsubject/$id');
+    await rest.delete('user/$id');
   }
 
   // You may not need this REST call in your app. It is only for example here.
-  Future<LectSubject> createQuote({LectSubject lectsubject}) async {
-    final json = await rest.post('lectsubject', data: lectsubject);
-    return LectSubject.fromJson(json);
+  Future<User> createQuote({User subject}) async {
+    final json = await rest.post('user', data: subject);
+    return User.fromJson(json);
   }
 } // class Quote

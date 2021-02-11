@@ -1,72 +1,125 @@
 import 'package:flutter/material.dart';
-import 'package:mp_final_project/screens/timetable/component/table_list.dart';
-import 'package:mp_final_project/screens/timetable/component/tablelistcart.dart';
-import 'package:mp_final_project/size_config.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:mp_final_project/components/main_drawer.dart';
+import 'package:mp_final_project/constant.dart';
+import 'package:mp_final_project/models/subject_model.dart';
+import 'package:mp_final_project/screens/Studprofile/components/info.dart';
 
-class Body extends StatelessWidget {
+import 'package:mp_final_project/sevices/auth.dart';
+import 'package:mp_final_project/sevices/subject_data_service.dart';
+
+import '../../../locater.dart';
+
+class Tablebody extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        PageTitle(),
-        Expanded(
-          child: Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 2),
-            child: GridView.builder(
-              itemCount: tableList.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount:
-                    SizeConfig.orientation == Orientation.landscape ? 2 : 1,
-                mainAxisSpacing: 20,
-                crossAxisSpacing:
-                    SizeConfig.orientation == Orientation.landscape
-                        ? SizeConfig.defaultSize * 2
-                        : 0,
-                childAspectRatio: 2.5,
-              ),
-              itemBuilder: (context, index) => TableListCard(
-                tableLists: tableList[index],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  _BodyprofileState createState() => _BodyprofileState();
 }
 
-class PageTitle extends StatelessWidget {
+class _BodyprofileState extends State<Tablebody> {
+  final _authService = locator<AuthServices>();
+  Future<List<Subject>> _futureData;
+  List<Subject> _subjects;
+  final dataService = QuoteDataService();
+
+  @override
+  void initState() {
+    super.initState();
+    _futureData = dataService.getAllQuotes();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(SizeConfig.defaultSize * 2),
-      child: Container(
+    return FutureBuilder<List<Subject>>(
+      future: _futureData,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          _subjects = snapshot.data;
+          return _studetnMainScreen();
+        }
+        return _buildFetchingDataScreen();
+      },
+    );
+  }
+
+  Scaffold _studetnMainScreen() {
+    final user = _authService.currentUser;
+    return Scaffold(
+      //appBar: _getCustomAppBar(),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: ListView.separated(
+              itemCount: _subjects.length,
+              separatorBuilder: (context, index) => Divider(
+                color: Colors.blueGrey,
+              ),
+              itemBuilder: (context, index) {
+                final Subject _subject = _subjects[index];
+                return Card(
+                  child: ListTile(
+                    title: Text(_subject.data),
+                    subtitle: Text(_subject.time),
+                    trailing: Row(
+                      children: <Widget>[
+                        Text(
+                          'labotary',
+                          style: TextStyle(backgroundColor: Colors.blue),
+                        ),
+                        Text(
+                          'class',
+                          style: TextStyle(backgroundColor: Colors.blue),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Scaffold _buildFetchingDataScreen() {
+    return Scaffold(
+      body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                '30 Dec 2020',
-                style: TextStyle(
-                  fontSize: SizeConfig.defaultSize * 3,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Sunday',
-                style: TextStyle(
-                  fontSize: SizeConfig.defaultSize * 2,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
+            CircularProgressIndicator(),
+            SizedBox(height: 50),
+            Text('Fetching data... Please wait'),
           ],
         ),
       ),
     );
   }
+}
+
+_getCustomAppBar() {
+  return PreferredSize(
+    preferredSize: Size.fromHeight(80),
+    child: AppBar(
+      iconTheme: IconThemeData(
+        color: Colors.white,
+      ),
+      title: Text(
+        'Dashboard',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.normal,
+        ),
+      ),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      flexibleSpace: ClipPath(
+        // clipper: MyCustomClipperForAppBar(),
+        child: Container(
+          color: kPrimaryColor,
+        ),
+      ),
+    ),
+  );
 }

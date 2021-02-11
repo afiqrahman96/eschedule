@@ -1,39 +1,5 @@
 import 'package:flutter/material.dart';
 
-_getCustomAppBar() {
-  return PreferredSize(
-    preferredSize: Size.fromHeight(80),
-    child: AppBar(
-      iconTheme: IconThemeData(
-        color: Colors.white,
-      ),
-      title: Text(
-        'Dashboard',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-          fontWeight: FontWeight.normal,
-        ),
-      ),
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      flexibleSpace: ClipPath(
-        // clipper: MyCustomClipperForAppBar(),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF764BA2), Color(0xFF667EEA)],
-              begin: Alignment.bottomRight,
-              end: Alignment.topLeft,
-              tileMode: TileMode.clamp,
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
 // class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 //   final double _prefferedHeight = 100.0;
 

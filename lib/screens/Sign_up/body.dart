@@ -13,6 +13,7 @@ class Body extends StatelessWidget {
   String password;
   String email;
   String name;
+  String description;
   @override
   Widget build(BuildContext context) {
     final AuthServices _auth = AuthServices();
@@ -31,19 +32,13 @@ class Body extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.05),
             RoundedInputField(
-              hintText: "Matric Number",
-              onChanged: (value) {
-                matricNumber = value;
-              },
-            ),
-            RoundedInputField(
               hintText: "Name",
               onChanged: (value) {
                 name = value;
               },
             ),
             RoundedInputField(
-              hintText: "email",
+              hintText: "Email",
               onChanged: (value) {
                 email = value;
               },
@@ -51,6 +46,18 @@ class Body extends StatelessWidget {
             RoundedPasswordField(
               onChanged: (value) {
                 password = value;
+              },
+            ),
+            RoundedInputField(
+              hintText: "Matric Number",
+              onChanged: (value) {
+                matricNumber = value;
+              },
+            ),
+            RoundedInputField(
+              hintText: "1SCSV example",
+              onChanged: (value) {
+                description = value;
               },
             ),
             SizedBox(height: size.height * 0.01),
@@ -62,6 +69,7 @@ class Body extends StatelessWidget {
                   matricNumber: matricNumber,
                   password: password,
                   name: name,
+                  description: description,
                 );
                 // if (result is bool) {
                 Navigator.pop(context);

@@ -25,7 +25,7 @@ class QuoteDataService {
   //  are given for examples to guide you writing the other REST calls.
 
   Future<List<Subject>> getAllQuotes() async {
-    final listJson = await rest.get('subject');
+    final listJson = await rest.get('subject/all');
 
     return (listJson as List)
         .map((itemJson) => Subject.fromJson(itemJson))
