@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mp_final_project/components/main_drawer.dart';
 import 'package:mp_final_project/constant.dart';
@@ -12,6 +13,8 @@ import 'package:mp_final_project/sevices/rest_service.dart';
 import 'package:mp_final_project/sevices/subject_data_service.dart';
 
 import '../../../locater.dart';
+import '../../Studprofile/profile_screen.dart';
+import '../profile_screen.dart';
 //import '../../Lectprofile/profile_screen.dart';
 
 class LecterurBodyprofile extends StatefulWidget {
@@ -166,15 +169,35 @@ class _LecterurBodyprofileState extends State<LecterurBodyprofile> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.refresh),
-        onPressed: () {
-          dataService.getAllSubject();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => LecterurScreen()),
-          );
-        },
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        backgroundColor: Colors.purple,
+        foregroundColor: Colors.white,
+        closeManually: true,
+        children: [
+          SpeedDialChild(
+              child: Icon(Icons.refresh, color: Colors.white),
+              backgroundColor: Colors.purple,
+              label: "Refresh",
+              onTap: () {
+                dataService.getAllSubject();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LecterurScreen()),
+                );
+              }),
+          SpeedDialChild(
+              child: Icon(Icons.add, color: Colors.white),
+              backgroundColor: Colors.purple,
+              label: "Add Subject",
+              onTap: () {
+                Subject _subject;
+                print("Editing...");
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return SubjectForm(subject: _subject);
+                }));
+              })
+        ],
       ),
     );
   }
@@ -221,3 +244,15 @@ _getCustomAppBar() {
     ),
   );
 }
+
+/*floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.refresh),
+        onPressed: () {
+          dataService.getAllSubject();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LecterurScreen()),
+          );
+        },
+      ),
+      */
