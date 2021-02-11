@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mp_final_project/components/main_drawer.dart';
+import 'package:mp_final_project/components/student_main_drawer.dart';
 import 'package:mp_final_project/constant.dart';
 import 'package:mp_final_project/screens/Participant/components/body.dart';
 import 'package:mp_final_project/size_config.dart';
 
-class ParticipantScreen extends StatelessWidget {
+class StudParticipantScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);

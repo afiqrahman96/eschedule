@@ -3,11 +3,11 @@ import 'package:mp_final_project/locater.dart';
 import 'package:mp_final_project/screens/Participant/lect_stud_participant_screen.dart';
 import 'package:mp_final_project/screens/Participant/stud_participant_screen.dart';
 import 'package:mp_final_project/screens/lecterur/profile_screen.dart';
+import 'package:mp_final_project/screens/timetable/table_screen.dart';
 import 'package:mp_final_project/sevices/auth.dart';
-import '../screens/Participant/components/body.dart';
-import '../screens/Participant/stud_participant_screen.dart';
 import '../screens/Studprofile/profile_screen.dart';
 import '../screens/splash_screen.dart';
+import '../screens/timetable/table_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   final AuthServices _auth = locator<AuthServices>();

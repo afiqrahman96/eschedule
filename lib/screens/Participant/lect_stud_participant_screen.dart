@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mp_final_project/components/student_main_drawer.dart';
+import 'package:mp_final_project/components/main_drawer.dart';
 import 'package:mp_final_project/constant.dart';
-import 'package:mp_final_project/screens/Studprofile/components/body.dart';
+import 'package:mp_final_project/screens/Participant/components/body_lect.dart';
 import 'package:mp_final_project/size_config.dart';
 
-class ProfileScreen extends StatelessWidget {
+class LectParticipantScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -24,7 +24,7 @@ _getCustomAppBar() {
         color: Colors.white,
       ),
       title: Text(
-        'Dashboard',
+        'Participant',
         style: TextStyle(
           color: Colors.white,
           fontSize: 20,

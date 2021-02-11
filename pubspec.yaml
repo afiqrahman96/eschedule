@@ -35,6 +35,7 @@ dependencies:
   line_awesome_flutter: ^1.0.1
   flutter_screenutil: ^4.0.2+3
   animated_theme_switcher: ^1.0.9
+  flutter_speed_dial: ^1.2.1
   adobe_xd: ^1.0.0+1
   get_it: ^5.0.1
 
